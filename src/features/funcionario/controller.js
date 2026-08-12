@@ -28,6 +28,28 @@ const FuncionarioController = {
     });
   }),
 
+  changeActive: asyncHandler(async(req, res) => {
+    const { id } = req.params;
+    const funcionario = await FuncionarioService.getById(id);
+
+    if(!funcionario){
+      return response.notFound(res, {
+        message: "Funcionario não encontrado!",
+      });
+    }
+
+    const activeStatus = funcionario.ativo;
+
+    const newActive = !activeStatus;
+
+    const data = await FuncionarioService.changeActive(id, newActive);
+
+    return response.success(res, {
+      message: "Atividade alterada!",
+      data
+    })
+  }),
+
   delete: asyncHandler(async (req, res) => {
     const { id } = req.params;
     const funcionario = await FuncionarioService.getById(id);

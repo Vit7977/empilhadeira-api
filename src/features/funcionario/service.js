@@ -9,6 +9,10 @@ const FuncionarioService = {
     return await FuncionarioRepository.update(id, data);
   },
 
+  async changeActive(id, active){
+    return await FuncionarioRepository.changeActive(id, active);
+  },
+
   async delete(id) {
     return await FuncionarioRepository.delete(id);
   },

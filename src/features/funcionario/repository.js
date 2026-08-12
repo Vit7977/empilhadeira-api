@@ -25,6 +25,11 @@ const FuncionarioRepository = {
     return result;
   },
 
+  async changeActive(id, active){
+    const [result] = await pool.execute(`UPDATE funcionario SET ativo = ? WHERE id = ?`, [active, id]);
+    return result;
+  },
+
   async delete(id) {
     const [result] = await pool.execute(
       `DELETE FROM funcionario WHERE id = ?`,

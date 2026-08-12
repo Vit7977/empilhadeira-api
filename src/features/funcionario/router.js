@@ -26,6 +26,8 @@ router.put(
   FuncionarioController.update,
 );
 
+router.patch("/active/:id", validate(funcionarioIdSchema, "params"), FuncionarioController.changeActive)
+
 router.delete(
   "/:id",
   validate(funcionarioIdSchema, "params"),
