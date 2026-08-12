@@ -1,5 +1,5 @@
 const dbConfig = {
-    development: {
+    dev: {
         host: "localhost",
         user: "root",
         password: "",
