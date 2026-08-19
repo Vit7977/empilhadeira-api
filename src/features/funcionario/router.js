@@ -19,6 +19,7 @@ router.get(
 );
 
 router.post("/", validate(funcionarioSchema), FuncionarioController.create);
+
 router.put(
   "/:id",
   validate(funcionarioIdSchema, "params"),
@@ -26,7 +27,11 @@ router.put(
   FuncionarioController.update,
 );
 
-router.patch("/active/:id", validate(funcionarioIdSchema, "params"), FuncionarioController.changeActive)
+router.patch(
+  "/active/:id",
+  validate(funcionarioIdSchema, "params"),
+  FuncionarioController.changeActive,
+);
 
 router.delete(
   "/:id",
