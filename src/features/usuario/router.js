@@ -4,6 +4,7 @@ import {
   usuarioSchema,
   updateUsuarioSchema,
   usuarioIdSchema,
+  loginSchema
 } from "./dto.js";
 
 import UsuarioController from "./controller.js";
@@ -19,6 +20,8 @@ router.get(
 );
 
 router.post("/", validate(usuarioSchema), UsuarioController.create);
+
+router.post("/login", validate(loginSchema), UsuarioController.login);
 
 router.put(
   "/:id",

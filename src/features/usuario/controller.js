@@ -101,6 +101,31 @@ const UsuarioController = {
     });
   }),
 
+  login: asyncHandler(async (req, res) => {
+    const { email, senha } = req.body;
+ 
+    const resultado = await UsuarioService.login(email, senha);
+ 
+    if (!resultado) {
+      return response.unauthorized(res, {
+        message: "E-mail ou senha inválidos!",
+      });
+    }
+ 
+    if (resultado.blocked) {
+      return response.forbidden(res, {
+        message: "Usuario inativo. Contate o administrador.",
+      });
+    }
+ 
+    const usuario = await UsuarioService.getByEmail(email);
+
+    return response.success(res, {
+      message: "Login realizado com sucesso!",
+      data: usuario,
+    });
+  }),
+
   getById: asyncHandler(async (req, res) => {
     const { id } = req.params;
     const usuario = await UsuarioService.getById(id);

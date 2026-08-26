@@ -25,6 +25,12 @@ export const usuarioSchema = z.object({
 
 export const updateUsuarioSchema = usuarioSchema.partial();
 
+export const loginSchema = z.object({
+  email: z.email({ message: "E-mail inválido" }),
+ 
+  senha: z.string({ required_error: "Senha é obrigatória" }).min(1, "Senha é obrigatória"),
+});
+
 export const usuarioIdSchema = z.object({
   id: z.coerce
     .number({

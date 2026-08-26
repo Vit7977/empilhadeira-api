@@ -1,5 +1,5 @@
 import UsuarioRepository from "./repository.js";
-import {hashPass} from '../../core/utils/passUtils.js'
+import {hashPass, validatePass} from '../../core/utils/passUtils.js'
 
 const UsuarioService = {
   async create(data) {
@@ -15,7 +15,7 @@ const UsuarioService = {
     const payload = { ...data };
 
     if (payload.senha) {
-      payload.senha = await argon2.hash(payload.senha);
+      payload.senha = await hashPass(payload.senha);
     }
 
     return await UsuarioRepository.update(id, payload);
@@ -27,6 +27,26 @@ const UsuarioService = {
 
   async delete(id) {
     return await UsuarioRepository.delete(id);
+  },
+
+async login(email, senha) {
+    const usuario = await UsuarioRepository.login(email);
+ 
+    if (!usuario) {
+      return null;
+    }
+ 
+    const senhaValida = await validatePass(usuario.senha, senha);
+ 
+    if (!senhaValida) {
+      return null;
+    }
+
+     if (!usuario.ativo) {
+      return { blocked: true };
+    }
+ 
+    return usuario;
   },
 
   async getById(id) {
