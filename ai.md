@@ -396,57 +396,14 @@ com validação através do middleware `validate(funcionarioSchema)`.
 - Modelagem do banco.
 - Middleware de validação com Zod.
 - Padronização de respostas HTTP.
-- Estrutura parcial do módulo de funcionários.
-
-### Parcialmente implementado
-
-#### Funcionário
-
-Já possui:
-
-- DTO.
-- Controller.
-- Service.
-- Repository.
-
-Ainda é necessário vincular explicitamente as rotas no `router.js`.
+- Módulo de funcionários (DTO, Repository, Service, Controller, Router).
+- Módulo de usuários (DTO, Repository, Service, Controller, Router, Argon2).
+- Módulo de empilhadeiras (DTO, Repository, Service, Controller, Router).
+- Módulo de telemetria (DTO, Repository, Service, Scheduler, Controller, Router):
+  - Recepção contínua de dados do ESP32 (a cada 1s).
+  - Agendador de reset/limpeza automática da tabela no banco a cada 30 segundos.
 
 ### Planejado
-
-#### Usuário
-
-Criar:
-
-- DTO.
-- Repository.
-- Service.
-- Controller.
-- Router.
-- Autenticação.
-- Hash de senha com Argon2.
-
-#### Empilhadeira
-
-Criar:
-
-- DTO.
-- Repository.
-- Service.
-- Controller.
-- Router.
-- Cadastro.
-- Atualização de status.
-
-#### Telemetria
-
-Criar:
-
-- DTO.
-- Repository.
-- Service.
-- Controller.
-- Router.
-- Endpoint para recebimento dos dados enviados pelo ESP32.
 
 #### ESP32
 

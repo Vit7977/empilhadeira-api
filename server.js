@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import routes from './mapRoutes.js';
 import 'dotenv/config';
+import { startTelemetryCleanupScheduler } from './src/features/telemetria/scheduler.js';
 
 const api = express();
 const PORT = process.env.API_PORT ?? 3000
@@ -14,5 +15,6 @@ routes.forEach((route) => {
 });
 
 api.listen(PORT, ()=>{
-    console.log(`API: http://localhost:${PORT}`)
+    console.log(`API: http://localhost:${PORT}`);
+    startTelemetryCleanupScheduler();
 })
