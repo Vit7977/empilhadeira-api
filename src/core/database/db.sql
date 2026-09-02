@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS funcionario(
 
 CREATE TABLE IF NOT EXISTS usuario(
     id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    funcionario INT UNSIGNED NOT NULL,
+    funcionario INT UNSIGNED NOT NULL UNIQUE,
     email VARCHAR(255) NOT NULL UNIQUE,
     senha VARCHAR(255) NOT NULL,
     nivel_acesso ENUM("operador", "supervisor", "admin"),

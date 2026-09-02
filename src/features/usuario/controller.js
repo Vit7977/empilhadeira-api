@@ -6,6 +6,7 @@ import UsuarioService from "./service.js";
 const UsuarioController = {
   create: asyncHandler(async (req, res) => {
     const funcionario = await FuncionarioService.getById(req.body.funcionario);
+    const usuarios = await UsuarioService.getAll();
 
     if (!funcionario) {
       return response.notFound(res, {
@@ -13,6 +14,12 @@ const UsuarioController = {
       });
     }
 
+    if(usuarios.some(u => u.funcionario === req.body.funcionario)) {
+      return response.conflict(res, {
+        message: "Funcionario já possui um usuario cadastrado!",
+      });
+    }
+    
     const emailExistente = await UsuarioService.getByEmail(req.body.email);
 
     if (emailExistente) {
