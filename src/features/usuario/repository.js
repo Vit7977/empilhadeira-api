@@ -49,12 +49,16 @@ const UsuarioRepository = {
     return result;
   },
 
-  async login(email) {
+    async login(email) {
     const [usuario] = await pool.execute(
-      `SELECT id, funcionario, email, senha, nivel_acesso, ativo FROM usuario`, [email]
-    )
-    return usuario[0];
-  },
+    `SELECT id, funcionario, email, senha, nivel_acesso, ativo
+     FROM usuario
+     WHERE email = ?`,
+    [email]
+  );
+
+  return usuario[0];
+},
 
   async getById(id) {
     const [usuario] = await pool.execute(
