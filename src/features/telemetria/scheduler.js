@@ -2,19 +2,24 @@ import TelemetriaService from "./service.js";
 
 let intervalId = null;
 
-export const startTelemetryCleanupScheduler = (intervalMs = 30000) => {
+export const startTelemetryCleanupScheduler = (intervalMs = 60000) => {
   if (intervalId) return intervalId;
 
   console.log(
-    `[Telemetria] Scheduler de reset automático iniciado (a cada ${intervalMs / 1000}s).`,
+    `[Telemetria] Scheduler de limpeza automática iniciado (a cada ${intervalMs / 1000}s, mantendo a última telemetria).`,
   );
 
   intervalId = setInterval(async () => {
     try {
-      await TelemetriaService.reset();
-      console.log(`[Telemetria] Dados de telemetria resetados no banco de dados.`);
+      await TelemetriaService.deleteExceptLatest();
+      console.log(
+        `[Telemetria] Limpeza automática executada (mantida a última telemetria registrada).`,
+      );
     } catch (error) {
-      console.error("[Telemetria] Erro ao resetar dados de telemetria:", error.message);
+      console.error(
+        "[Telemetria] Erro na limpeza automática de telemetria:",
+        error.message,
+      );
     }
   }, intervalMs);
 

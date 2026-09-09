@@ -33,6 +33,8 @@ router.post("/", validate(telemetriaSchema), TelemetriaController.create);
 
 router.delete("/reset", TelemetriaController.reset);
 
+router.delete("/cleanup", TelemetriaController.deleteExceptLatest);
+
 router.delete(
   "/:id",
   validate(telemetriaIdSchema, "params"),

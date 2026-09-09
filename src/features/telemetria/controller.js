@@ -113,7 +113,23 @@ const TelemetriaController = {
     });
   }),
 
-  reset: asyncHandler(async (_, res) => {
+  deleteExceptLatest: asyncHandler(async (_, res) => {
+    const data = await TelemetriaService.deleteExceptLatest();
+    return response.success(res, {
+      message: "Telemetrias antigas excluídas, mantendo a última registrada!",
+      data,
+    });
+  }),
+
+  reset: asyncHandler(async (req, res) => {
+    if (req.query.keepLatest === "true") {
+      const data = await TelemetriaService.deleteExceptLatest();
+      return response.success(res, {
+        message: "Telemetrias antigas excluídas, mantendo a última registrada!",
+        data,
+      });
+    }
+
     const data = await TelemetriaService.reset();
     return response.success(res, {
       message: "Dados de telemetria resetados!",

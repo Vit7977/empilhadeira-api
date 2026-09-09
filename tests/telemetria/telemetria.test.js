@@ -103,3 +103,44 @@ describe("POST /api/telemetria - Registrar Telemetria", () => {
     });
   });
 });
+
+describe("DELETE /api/telemetria/cleanup - Limpar telemetrias mantendo a última", () => {
+  beforeEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  afterAll(() => {
+    stopTelemetryCleanupScheduler();
+  });
+
+  it("deve excluir telemetrias antigas mantendo a última registrada", async () => {
+    vi.spyOn(pool, "execute").mockResolvedValueOnce([{ affectedRows: 5 }]);
+
+    const response = await request(api).delete("/api/telemetria/cleanup");
+
+    expect(response.status).toBe(200);
+    expect(response.body).toMatchObject({
+      success: true,
+      status: 200,
+      message: "Telemetrias antigas excluídas, mantendo a última registrada!",
+      data: {
+        affectedRows: 5,
+      },
+    });
+  });
+
+  it("deve excluir telemetrias mantendo a última via DELETE /api/telemetria/reset?keepLatest=true", async () => {
+    vi.spyOn(pool, "execute").mockResolvedValueOnce([{ affectedRows: 3 }]);
+
+    const response = await request(api).delete(
+      "/api/telemetria/reset?keepLatest=true",
+    );
+
+    expect(response.status).toBe(200);
+    expect(response.body).toMatchObject({
+      success: true,
+      status: 200,
+      message: "Telemetrias antigas excluídas, mantendo a última registrada!",
+    });
+  });
+});

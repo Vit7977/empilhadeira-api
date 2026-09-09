@@ -66,6 +66,18 @@ const TelemetriaRepository = {
     );
     return result;
   },
+
+  async deleteExceptLatest() {
+    const [result] = await pool.execute(
+      `DELETE FROM telemetria
+      WHERE id < (
+        SELECT COALESCE(max_id, 0) FROM (
+          SELECT MAX(id) AS max_id FROM telemetria
+        ) AS temp
+      )`,
+    );
+    return result;
+  },
 };
 
 export default TelemetriaRepository;

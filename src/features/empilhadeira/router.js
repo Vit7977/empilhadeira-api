@@ -4,6 +4,7 @@ import {
   empilhadeiraSchema,
   updateEmpilhadeiraSchema,
   empilhadeiraIdSchema,
+  empilhadeiraCodigoSchema,
   updateStatusSchema,
 } from "./dto.js";
 
@@ -12,6 +13,12 @@ import EmpilhadeiraController from "./controller.js";
 const router = Router();
 
 router.get("/", EmpilhadeiraController.getAll);
+
+router.get(
+  "/codigo/:codigo",
+  validate(empilhadeiraCodigoSchema, "params"),
+  EmpilhadeiraController.getByCodigo,
+);
 
 router.get(
   "/:id",

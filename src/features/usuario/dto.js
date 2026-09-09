@@ -13,7 +13,7 @@ export const usuarioSchema = z.object({
 
   senha: z
     .string({ required_error: "Senha é obrigatória" })
-    .min(8, "Senha deve ter no mínimo 8 caracteres")
+    .min(6, "Senha deve ter no mínimo 6 caracteres")
     .max(255, "Senha deve ter no máximo 255 caracteres"),
 
   nivel_acesso: z

@@ -97,3 +97,41 @@ describe("POST /api/empilhadeira - Criar Empilhadeira", () => {
     });
   });
 });
+
+describe("GET /api/empilhadeira/codigo/:codigo - Buscar Empilhadeira por Código", () => {
+  beforeEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  afterAll(() => {
+    stopTelemetryCleanupScheduler();
+  });
+
+  it("deve retornar uma empilhadeira com sucesso quando o código existir", async () => {
+    const empilhadeiraMock = { id: 1, codigo: "EMP-001", status: "disponivel" };
+    vi.spyOn(pool, "execute").mockResolvedValueOnce([[empilhadeiraMock]]);
+
+    const response = await request(api).get("/api/empilhadeira/codigo/EMP-001");
+
+    expect(response.status).toBe(200);
+    expect(response.body).toMatchObject({
+      success: true,
+      status: 200,
+      message: "Empilhadeira consultada!",
+      data: empilhadeiraMock,
+    });
+  });
+
+  it("deve retornar erro 404 quando o código não for encontrado", async () => {
+    vi.spyOn(pool, "execute").mockResolvedValueOnce([[]]);
+
+    const response = await request(api).get("/api/empilhadeira/codigo/INEXISTENTE");
+
+    expect(response.status).toBe(404);
+    expect(response.body).toMatchObject({
+      success: false,
+      status: 404,
+      message: "Empilhadeira não encontrada!",
+    });
+  });
+});

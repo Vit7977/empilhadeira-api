@@ -29,3 +29,10 @@ export const empilhadeiraIdSchema = z.object({
     .int("ID deve ser um número inteiro")
     .positive("ID deve ser maior que zero"),
 });
+
+export const empilhadeiraCodigoSchema = z.object({
+  codigo: z
+    .string({ required_error: "Código é obrigatório" })
+    .min(1, "Código é obrigatório")
+    .max(100, "Código deve ter no máximo 100 caracteres"),
+});

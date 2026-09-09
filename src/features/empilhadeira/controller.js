@@ -101,6 +101,22 @@ const EmpilhadeiraController = {
     });
   }),
 
+  getByCodigo: asyncHandler(async (req, res) => {
+    const { codigo } = req.params;
+    const empilhadeira = await EmpilhadeiraService.getByCodigo(codigo);
+
+    if (!empilhadeira) {
+      return response.notFound(res, {
+        message: "Empilhadeira não encontrada!",
+      });
+    }
+
+    return response.success(res, {
+      message: "Empilhadeira consultada!",
+      data: empilhadeira,
+    });
+  }),
+
   getAll: asyncHandler(async (_, res) => {
     const empilhadeiras = await EmpilhadeiraService.getAll();
 

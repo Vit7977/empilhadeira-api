@@ -32,6 +32,10 @@ const TelemetriaService = {
   async deleteOlderThan(seconds) {
     return await TelemetriaRepository.deleteOlderThan(seconds);
   },
+
+  async deleteExceptLatest() {
+    return await TelemetriaRepository.deleteExceptLatest();
+  },
 };
 
 export default TelemetriaService;
