@@ -13,13 +13,11 @@ export const telemetriaSchema = z.object({
 
   posicao_x: z.coerce
     .number({ invalid_type_error: "Posição X deve ser um número" })
-    .int("Posição X deve ser um número inteiro")
     .nonnegative("Posição X não pode ser negativa")
     .optional(),
 
   posicao_y: z.coerce
     .number({ invalid_type_error: "Posição Y deve ser um número" })
-    .int("Posição Y deve ser um número inteiro")
     .nonnegative("Posição Y não pode ser negativa")
     .optional(),
 
