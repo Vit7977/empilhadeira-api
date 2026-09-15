@@ -35,8 +35,8 @@ CREATE TABLE IF NOT EXISTS telemetria(
     id BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     empilhadeira INT UNSIGNED NOT NULL,
     data_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    posicao_x INT UNSIGNED,
-    posicao_y INT UNSIGNED,
+    posicao_x FLOAT UNSIGNED,
+    posicao_y FLOAT UNSIGNED,
     nivel_bateria INT UNSIGNED,
     velocidade DECIMAL(5,2),
     peso_carga DECIMAL(8,2),
@@ -48,4 +48,4 @@ CREATE TABLE IF NOT EXISTS telemetria(
 
 CREATE INDEX idx_telemetria_data_hora ON telemetria(data_hora);
 
-INSERT INTO funcionario(nome, cpf, data_nasc, telefone, cargo) VALUES("Zuleica", "33344455599", "2003-02-01", "11999333777", "tecnico");
+INSERT INTO funcionario(nome, cpf, data_nasc, telefone, cargo) VALUES("Admin", "33344455598", "2003-02-01", "11999333777", "gerente");
