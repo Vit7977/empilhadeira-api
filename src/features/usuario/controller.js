@@ -122,6 +122,7 @@ const UsuarioController = {
     if (resultado.blocked) {
       return response.forbidden(res, {
         message: "Usuario inativo. Contate o administrador.",
+        error: "Usuário inativo. Você não pode logar se estiver inativo.",
       });
     }
  

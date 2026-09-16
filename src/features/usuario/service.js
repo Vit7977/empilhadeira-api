@@ -43,6 +43,7 @@ async login(email, senha) {
     }
 
      if (!usuario.ativo) {
+     if (!usuario.ativo || Number(usuario.ativo) === 0 || usuario.ativo === false) {
       return { blocked: true };
     }
  
