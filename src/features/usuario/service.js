@@ -42,14 +42,12 @@ async login(email, senha) {
       return null;
     }
 
-     if (!usuario.ativo) {
-     if (!usuario.ativo || Number(usuario.ativo) === 0 || usuario.ativo === false) {
+    if (!usuario.ativo || Number(usuario.ativo) === 0 || usuario.ativo === false) {
       return { blocked: true };
     }
- 
+
     return usuario;
   },
-
   async getById(id) {
     return await UsuarioRepository.getById(id);
   },
@@ -60,7 +58,7 @@ async login(email, senha) {
 
   async getAll() {
     return await UsuarioRepository.getAll();
-  },
-};
+  }
+}
 
 export default UsuarioService;
