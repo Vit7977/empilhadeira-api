@@ -34,11 +34,23 @@ const EmpilhadeiraRepository = {
   },
 
   async delete(id) {
-    const [result] = await pool.execute(
-      `DELETE FROM empilhadeira WHERE id = ?`,
-      [id],
-    );
-    return result;
+    // A telemetria referencia a empilhadeira (FK), então precisa ser apagada antes
+    const conn = await pool.getConnection();
+    try {
+      await conn.beginTransaction();
+      await conn.execute(`DELETE FROM telemetria WHERE empilhadeira = ?`, [id]);
+      const [result] = await conn.execute(
+        `DELETE FROM empilhadeira WHERE id = ?`,
+        [id],
+      );
+      await conn.commit();
+      return result;
+    } catch (err) {
+      await conn.rollback();
+      throw err;
+    } finally {
+      conn.release();
+    }
   },
 
   async getById(id) {
@@ -60,6 +72,13 @@ const EmpilhadeiraRepository = {
   async getAll() {
     const [empilhadeiras] = await pool.execute(`SELECT * FROM empilhadeira;`);
     return empilhadeiras;
+  },
+
+  async count() {
+    const [rows] = await pool.execute(
+      `SELECT COUNT(*) AS total FROM empilhadeira`,
+    );
+    return rows[0].total;
   },
 };
 

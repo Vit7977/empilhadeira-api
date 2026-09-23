@@ -28,6 +28,10 @@ const EmpilhadeiraService = {
   async getAll() {
     return await EmpilhadeiraRepository.getAll();
   },
+
+  async count() {
+    return await EmpilhadeiraRepository.count();
+  },
 };
 
 export default EmpilhadeiraService;

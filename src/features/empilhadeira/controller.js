@@ -4,6 +4,15 @@ import EmpilhadeiraService from "./service.js";
 
 const EmpilhadeiraController = {
   create: asyncHandler(async (req, res) => {
+    const total = await EmpilhadeiraService.count();
+
+    if (total > 0) {
+      return response.conflict(res, {
+        message:
+          "Já existe uma empilhadeira cadastrada! Exclua a atual para cadastrar outra.",
+      });
+    }
+
     const codigoExistente = await EmpilhadeiraService.getByCodigo(
       req.body.codigo,
     );
@@ -14,7 +23,23 @@ const EmpilhadeiraController = {
       });
     }
 
-    const data = await EmpilhadeiraService.create(req.body);
+    let data;
+    try {
+      data = await EmpilhadeiraService.create(req.body);
+    } catch (err) {
+      // Outra requisição cadastrou uma empilhadeira entre a contagem e o INSERT
+      if (
+        err.code === "ER_DUP_ENTRY" &&
+        err.message.includes("uq_empilhadeira_unica")
+      ) {
+        return response.conflict(res, {
+          message:
+            "Já existe uma empilhadeira cadastrada! Exclua a atual para cadastrar outra.",
+        });
+      }
+      throw err;
+    }
+
     return response.created(res, {
       message: "Empilhadeira cadastrada!",
       data,

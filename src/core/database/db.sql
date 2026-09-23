@@ -28,7 +28,11 @@ CREATE TABLE IF NOT EXISTS usuario(
 CREATE TABLE IF NOT EXISTS empilhadeira(
     id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     codigo VARCHAR(100) NOT NULL UNIQUE,
-    status ENUM("disponivel", "operando", "parada") DEFAULT "disponivel"
+    status ENUM("disponivel", "operando", "parada") DEFAULT "disponivel",
+    -- Garante que só exista uma empilhadeira cadastrada: toda linha tem unica = TRUE e a coluna é UNIQUE
+    unica BOOL NOT NULL DEFAULT TRUE,
+    CONSTRAINT uq_empilhadeira_unica UNIQUE (unica),
+    CONSTRAINT chk_empilhadeira_unica CHECK (unica = TRUE)
 );
 
 CREATE TABLE IF NOT EXISTS telemetria(
@@ -43,7 +47,7 @@ CREATE TABLE IF NOT EXISTS telemetria(
     temperatura DECIMAL(5,2),
     sensor_linha VARCHAR(100),
     obstaculo BOOL DEFAULT FALSE,
-    FOREIGN KEY (empilhadeira) REFERENCES empilhadeira(id)
+    FOREIGN KEY (empilhadeira) REFERENCES empilhadeira(id) ON DELETE CASCADE
 );
 
 CREATE INDEX idx_telemetria_data_hora ON telemetria(data_hora);

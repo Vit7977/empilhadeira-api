@@ -2,9 +2,9 @@
   "name": "empilhadeira-api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "dev": "nodemon server.js",
+    "dev": "npm i && nodemon .",
     "test": "vitest"
   },
   "repository": {
