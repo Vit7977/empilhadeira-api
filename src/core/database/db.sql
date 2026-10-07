@@ -52,4 +52,4 @@ CREATE TABLE IF NOT EXISTS telemetria(
 
 CREATE INDEX idx_telemetria_data_hora ON telemetria(data_hora);
 
-INSERT INTO funcionario(nome, cpf, data_nasc, telefone, cargo) VALUES("Admin", "33344455598", "2003-02-01", "11999333777", "gerente");
+--INSERT INTO funcionario(nome, cpf, data_nasc, telefone, cargo) VALUES("Admin", "33344455598", "2003-02-01", "11999333777", "gerente");
