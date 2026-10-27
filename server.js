@@ -5,7 +5,7 @@ import "dotenv/config";
 import { startTelemetryCleanupScheduler } from "./src/features/telemetria/scheduler.js";
 
 export const api = express();
-const PORT = process.env.API_PORT ?? 3000;
+const PORT = Number(process.env.PORT || process.env.API_PORT || 3000);
 
 api.use(cors());
 api.use(express.json());
