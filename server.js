@@ -14,7 +14,7 @@ routes.forEach((route) => {
   api.use(route.path, route.router);
 });
 
-api.listen(PORT, () => {
+api.listen(PORT, "0.0.0.0", () => {
   console.log(`API: http://localhost:${PORT}`);
   startTelemetryCleanupScheduler();
 });

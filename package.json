@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "dev": "npm i && nodemon .",
+    "start": "node server.js",
     "test": "vitest"
   },
   "repository": {
